@@ -17,4 +17,4 @@ jobs:
           base: master
           head: master
           merge_method: rebase
-          pr_title: [ForkSync] Sync with upstream.
+          pr_title: \[ForkSync\] Sync with upstream.
