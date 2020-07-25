@@ -142,3 +142,22 @@ jobs:
         artifacts: "./Artifacts/*"
         tag: ${{ env.REL_TAG }}
         token: ${{ secrets.GITHUB_TOKEN }}
+
+# The following part are added by Skimige. #
+
+    - name: Notify via Telegram
+      env:
+        CHAT_ID: ${{ secrets.CHAT_ID }}
+        BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+      run: |
+        OUTPUT="Artifacts"
+        export name=$(find $OUTPUT -name "*.dmg")
+        curl https://api.telegram.org/bot${BOT_TOKEN}/sendDocument -X POST -F chat_id="$CHAT_ID" -F caption="$GITHUB_SHA" -F document="@$name"
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@master
+      with:
+        name: HeliPort
+        path: Artifacts/HeliPort.dmg
+
+############################################
